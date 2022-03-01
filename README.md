@@ -1,2 +1,2 @@
 # gacha-chess
-Chess but gacha
+Chess but you have to gacha the pieces
