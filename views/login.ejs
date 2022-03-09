@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Gacha Chess</title>
+  <link rel="stylesheet" href="css/chessboard-1.0.0.min.css">
+  <style>
+    #container {
+      display: flex;                  /* establish flex container */
+      flex-direction: row;            /* default value; can be omitted */
+      flex-wrap: nowrap;              /* default value; can be omitted */
+      justify-content: space-between; /* switched from default (flex-start, see below) */
+      background-color: lightyellow;
+    }
+    #container > div {
+      width: 400px;
+      height: 400px;
+      border: 2px dashed red;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <div>
+    <center>
+      <h3>RULES OF GACHA CHESS</h3>
+    </center>
+    <li>The game starts with 15 pawns and 1 king each side</li>
+      <li>One point is awarded each turn</li>
+      <li>You can spend 10 points to replace a pawn with a random piece</li>
+      <li>The probabilities of each pieces are as follows:
+        <ul>Bishop and Knight: 37.50%</ul>
+        <ul>Rook: 16.67%</ul>
+        <ul>Queen: 8.33%</ul>
+      </li>
+  </div>
+  <div>
+      <center>
+        <h2>LOGIN</h2>
+        <form action="/login" method="POST">
+            <% if (messages.error) { %>
+              <b style="color: red"> <%= messages.error %> </b>
+              <br>
+            <% } %>
+            <label for="username"><b>Username</b></label>
+            <input id="username" type="text" placeholder="Enter Username" name="username" required>
+            <br>
+            <label for="password"><b>Password</b></label>
+            <input id="password" type="password" placeholder="Enter Password" name="password" required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+      </center>
+  </div>
+  <div>
+    <center>
+      <p id="gameDetails">
+        Black's point: 0 <br>
+        White's point: 0
+      </p>
+      <label>Status:</label>
+      <div id="status"></div>
+      <br> <br> <br>
+      <label>10 points to roll a random piece</label> <br>
+      <button id="gacha" disabled="true" onclick="rollRandomPiece()">Roll</button>
+      <div id="rolledPiece"></div>
+    </center>
+  </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+
+</body>
+</html>

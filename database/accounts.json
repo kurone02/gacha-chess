@@ -1,0 +1,59 @@
+[
+    {
+        "id": 0,
+        "username": "root",
+        "password": "$2b$10$I1ntzh0krXtXKCZDQKtAMeo9PzeiW7YYo3nLhRC6lcjcWiu/DgU3C",
+        "authority": -1,
+        "in_game": null
+    },
+    {
+        "id": 1,
+        "username": "admin",
+        "password": "$2b$10$n8bPh7alUjGGF3vh4LwuiOahIXwEcBNsnz3ZdGRAM24mxgWBib38S",
+        "authority": 0,
+        "in_game": null
+    },
+    {
+        "id": 2,
+        "username": "moderator1",
+        "password": "$2b$10$HW2bidtiRgFU7x4KiWEthufMlSOb4SfafGppyBLZlhpMTbO4bKDeu",
+        "authority": 1,
+        "in_game": null
+    },
+    {
+        "id": 3,
+        "username": "moderator2",
+        "password": "$2b$10$HW2bidtiRgFU7x4KiWEthufMlSOb4SfafGppyBLZlhpMTbO4bKDeu",
+        "authority": 1,
+        "in_game": null
+    },
+    {
+        "id": 4,
+        "username": "tester1",
+        "password": "$2b$10$QGqnfpR2ARkkMp9s5O07a.gO/CUFxot8xlFKxzN3BmJlOf6Sc.2Z6",
+        "authority": 2,
+        "in_game": null
+        
+    },
+    {
+        "id": 5,
+        "username": "tester2",
+        "password": "$2b$10$3M7.d8SURkxvksJcrntjleIufv9AVPS5R3eoEEpRkFeuwEuvUAobK",
+        "authority": 2,
+        "in_game": null
+    },
+    {
+        "id": 6,
+        "username": "tester3",
+        "password": "$2b$10$xfxH/L6tKDMBHsM4QJnkhOwUhDWtCkXZ6UiGSNXMOSGvTaLBukSR.",
+        "authority": 2,
+        "in_game": null
+    },
+    {
+        "id": 7,
+        "username": "tester4",
+        "password": "$2b$10$ZMVBkiTW.eg5KZOfGMf7vOnKSS2cQ.7UwgH2HiWbqOBqX5LkPeQ1y",
+        "authority": 2,
+        "in_game": null
+    }
+]
