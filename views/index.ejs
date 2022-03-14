@@ -1,88 +1,210 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Gacha Chess</title>
-  <link rel="stylesheet" href="css/chessboard-1.0.0.min.css">
-  <style>
-    #container {
-      display: flex;                  /* establish flex container */
-      flex-direction: row;            /* default value; can be omitted */
-      flex-wrap: nowrap;              /* default value; can be omitted */
-      justify-content: space-between; /* switched from default (flex-start, see below) */
-      background-color: lightyellow;
-    }
-    #container > div {
-      width: 400px;
-      height: 400px;
-      border: 2px dashed red;
-    }
-  </style>
-</head>
-<body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./templates/head.ejs") -%> 
+  </head>
 
-<div id="container">
-  <div>
-    <center>
-      <h3>RULES OF GACHA CHESS</h3>
-    </center>
-    <li>The game starts with 15 pawns and 1 king each side</li>
-      <li>One point is awarded each turn</li>
-      <li>You can spend 10 points to replace a pawn with a random piece</li>
-      <li>The probabilities of each pieces are as follows:
-        <ul>Bishop and Knight: 37.50%</ul>
-        <ul>Rook: 16.67%</ul>
-        <ul>Queen: 8.33%</ul>
-      </li>
-  </div>
-  <div>
-      <center>
-        <h1>Hi <%= name %></h1>
-        <% if (!match.id){ %> 
-          <form id="create_game" method="POST">
-            <button type="submit">Create game</button>
-          </form>
-          <form action="/join_game", method="POST">
-            <% if (messages.error) { %>
-              <b style="color: red"> <%= messages.error %> </b>
-              <br>
-            <% } %>
-            <input id="join_game" type="number" min="0" placeholder="Enter game id" name="join_game" required>
-            <button type="submit">Join game</button>
-          </form>
-        <% } else{ %> 
-          <form action="/resume_game", method="POST">
-            <% if (messages.error) { %>
-              <b style="color: red"> <%= messages.error %> </b>
-              <br>
-            <% } %>
-            <button type="submit">Resume game</button>
-          </form>
-          <% } %> 
-        <form action="/logout?_method=DELETE" method="POST">
-          <button type="submit">Log Out</button>
-        </form>
-      </center>
-  </div>
-  <div>
-    <center>
-      <p id="gameDetails">
-        Black's point: 0 <br>
-        White's point: 0
-      </p>
-      <label>Status:</label>
-      <div id="status"></div>
-      <br> <br> <br>
-      <label>10 points to roll a random piece</label> <br>
-      <button id="gacha" disabled="true" onclick="rollRandomPiece()">Roll</button>
-      <div id="rolledPiece"></div>
-    </center>
-  </div>
-</div>
+  <body>
 
-<script src="../static/js/jquery.min.js"></script>
-<script src="../socket.io/socket.io.js"></script>
-<script src="../static/js/client_index.js"></script>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-1"> </div>
+        <div class="col-md-10">
+            <%- include("./templates/navbar.ejs", { name: name, match: match, messages: messages }) -%> 
+            <div class="row">
+                <div class="col-md-9">
+                  <h3 class="text-center">
+                    Game rooms
+                </h3>
 
-</body>
+                <% if (messages.error) { %>
+                  <b style="color: red"> <%= messages.error %> </b>
+                  <br>
+                <% } %>
+
+                <div class="datatable" style="background-color: #E1E1E1; padding-bottom: 3px;">
+                    <div class="lt">&nbsp;</div>
+                    <div class="rt">&nbsp;</div>
+                    <div class="lb">&nbsp;</div>
+                    <div class="rb">&nbsp;</div>
+        
+                    <div style="padding: 4px 0 0 6px;font-size:1.4rem;position:relative;">
+                        Open custom rooms
+                    </div>
+                    <div style="background-color: white;margin:0.3em 3px 0 3px;position:relative;">
+                    <div class="ilt">&nbsp;</div>
+                    <div class="irt">&nbsp;</div>
+                    <table class="">
+                        <tbody>
+                            <tr>
+                                <th style="width: 5em;" class="top left">ID</th>
+                                <th style="width: 7em;" class="top">Type</th>
+                                <th style="width: 15em;" class="top">White player</th>
+                                <th style="width: 15em;" class="top">Black player</th>
+                                <th style="width: 10em;" class="top right">Action</th>
+                            </tr>
+
+                            <% for(let i = 0; i < waiting_matches.length; i++){ %> 
+                              <tr>
+                                <td class="dark left"><%- waiting_matches[i].id -%> </td>
+                                <td class="small dark">Custom</td>
+                                <td class="dark"><%- waiting_matches[i].white_player -%></td>
+                                <td class="dark"><%- waiting_matches[i].black_player -%></td>
+                                <% if(!match.id){ %> 
+                                  <td>
+                                    <form action="/join_game", method="POST">
+                                      <input id="join_game" type="hidden" value="<%= waiting_matches[i].id %>" name="join_game" required>
+                                      <button type="submit">Join game</button>
+                                    </form>
+                                  </td>
+                                  <!-- <td style="font-size:0.8em;" class="dark right"><a href="#">Join</a></td> -->
+                                <% } %> 
+                              </tr>
+                            <% } %> 
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="datatable" style="background-color: #E1E1E1; padding-bottom: 3px;">
+                    <div class="lt">&nbsp;</div>
+                    <div class="rt">&nbsp;</div>
+                    <div class="lb">&nbsp;</div>
+                    <div class="rb">&nbsp;</div>
+        
+                    <div style="padding: 4px 0 0 6px;font-size:1.4rem;position:relative;">
+                        Current games
+                    </div>
+                    <div style="background-color: white;margin:0.3em 3px 0 3px;position:relative;">
+                    <div class="ilt">&nbsp;</div>
+                    <div class="irt">&nbsp;</div>
+                    <table class="">
+                        <tbody>
+                            <tr>
+                                <th style="width: 5em;" class="top left">ID</th>
+                                <th style="width: 7em;" class="top">Type</th>
+                                <th style="width: 15em;" class="top">White player</th>
+                                <th style="width: 15em;" class="top">Black player</th>
+                                <th style="width: 10em;" class="top right">Action</th>
+                            </tr>
+                            
+
+                            <% for(let i = 0; i < ongoing_matches.length; i++){ %> 
+                              <tr>
+                                <td class="dark left"><%- ongoing_matches[i].id -%> </td>
+                                <td class="small dark">Custom</td>
+                                <td class="dark"><%- ongoing_matches[i].white_player -%></td>
+                                <td class="dark"><%- ongoing_matches[i].black_player -%></td>
+                                <td style="font-size:0.8em;" class="dark right"><a href="#">Watch</a></td>
+                              </tr>
+                            <% } %> 
+
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="datatable" style="background-color: #E1E1E1; padding-bottom: 3px;">
+                  <div class="lt">&nbsp;</div>
+                  <div class="rt">&nbsp;</div>
+                  <div class="lb">&nbsp;</div>
+                  <div class="rb">&nbsp;</div>
+      
+                  <div style="padding: 4px 0 0 6px;font-size:1.4rem;position:relative;">
+                      Finished games
+                  </div>
+                  <div style="background-color: white;margin:0.3em 3px 0 3px;position:relative;">
+                  <div class="ilt">&nbsp;</div>
+                  <div class="irt">&nbsp;</div>
+                  <table class="">
+                      <tbody>
+                          <tr>
+                              <th style="width: 5em;" class="top left">ID</th>
+                              <th style="width: 7em;" class="top">Type</th>
+                              <th style="width: 15em;" class="top">White player</th>
+                              <th style="width: 15em;" class="top">Black player</th>
+                              <th style="width: 10em;" class="top right">Result</th>
+                          </tr>
+
+                          <% for(let i = 0; i < finished_matches.length; i++){ %> 
+                            <tr>
+                              <td class="dark left"><%- finished_matches[i].id -%> </td>
+                              <td class="small dark">Custom</td>
+                              <td class="dark"><%- finished_matches[i].white_player -%></td>
+                              <td class="dark"><%- finished_matches[i].black_player -%></td>
+                              <td style="font-size:0.8em;" class="dark right">
+                                <% if(finished_matches[i].result === 1){ %> 
+                                  White wins
+                                <% } else if(finished_matches[i].result === 2){ %> 
+                                  Black wins
+                                <% } else{ %> 
+                                  Draw
+                                <% } %>
+                              </td>
+                            </tr>
+                          <% } %> 
+                      </tbody>
+                  </table>
+                  </div>
+              </div>
+
+                </div>
+                <!-- <div class="col-md-1"></div> -->
+                <div class="col-md-3">
+                  <% if(match.id){ %> 
+                    <div class="roundbox sidebox">
+                      <div class="roundbox-lt">&nbsp;</div>
+                      <div class="roundbox-rt">&nbsp;</div>
+                      <div class="caption titled">→ Your are currently in a match
+                        <div class="top-links"> </div>
+                      </div>
+                      <div class="personal-sidebar">
+                        <center>
+                          <form action="/resume_game", method="POST">
+                            <button type="submit">Resume game</button>
+                          </form>
+                        </center>
+                      </div>
+                    </div>
+                  <% } else{ %> 
+                    <div class="roundbox sidebox">
+                      <div class="roundbox-lt">&nbsp;</div>
+                      <div class="roundbox-rt">&nbsp;</div>
+                      <div class="caption titled">→ Custom room
+                        <div class="top-links"> </div>
+                      </div>
+                      <div class="personal-sidebar">
+                        <center>
+                          <form id="create_game" method="POST">
+                            <button type="submit">Create game</button>
+                          </form>
+                        </center>
+                      </div>
+                    </div>
+                  <% } %> 
+                  
+                  <br>
+                  <%- include("templates/top10.ejs") -%> 
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-1"> </div>
+      </div>
+    </div>    
+  </body>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/scripts.js"></script>
+
+  <script src="../socket.io/socket.io.js"></script>
+  <script src="../static/js/client_index.js"></script>
+
+  <%- include("templates/footer.ejs") -%> 
 </html>

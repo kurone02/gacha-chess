@@ -1,0 +1,30 @@
+<div class="roundbox sidebox">
+    <div class="roundbox-lt">&nbsp;</div>
+    <div class="roundbox-rt">&nbsp;</div>
+<div class="caption titled">→ Top players
+    <div class="top-links"> </div>
+</div>
+<div class="personal-sidebar">
+    <div>
+      <table class="rtable ">
+        <tbody>
+        <tr>
+        <th class="left" style="width:2.25em;">#</th>
+        <th class="">User</th>
+        <th class="" style="width:5em;">Elo</th>
+        </tr>
+        <!-- This is just example -->
+
+        <% for(let i = 0; i < Math.min(ranked_user.length, 10); i++){ %> 
+            <tr>
+                <td class="left dark"><%= i + 1 %> </td>
+                <td class=" dark"><a href="#" title="<%= ranked_user[i].rank %> <%= ranked_user[i].username %>" class="rated-user user<%= '-' + ranked_user[i].rank_css %>"><%= ranked_user[i].username %> </a></td>
+                <td class=" dark"><%= ranked_user[i].elo %></td>
+            </tr>
+        <% } %> 
+
+        </tbody>
+        </table>
+    </div>
+    <!-- <br style="clear:both;">  -->
+</div>

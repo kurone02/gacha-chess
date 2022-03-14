@@ -1,0 +1,44 @@
+/*  Empty CSS file for your own CSS */
+.inline {
+    display: inline;
+}
+
+.link-button {
+    display: block;
+    width: 100%;
+    padding: 3px 1.5rem;
+    clear: both;
+    font-weight: normal;
+    color: #292b2c;
+    text-align: inherit;
+    white-space: nowrap;
+    background: none;
+    border: 0;
+}
+.link-button:focus {
+    outline: none;
+}
+.link-button:active {
+    color:red;
+}
+
+.nav-link-button {
+    display: block;
+    width: 100%;
+    /* padding: 3px 1.5rem; */
+    clear: both;
+    font-weight: normal;
+    color: #292b2c;
+    text-align: inherit;
+    white-space: nowrap;
+    background: none;
+    border: 0;
+    padding: 0.5em 1em;
+}
+.nav-link-button:focus, .nav-link:hover {
+    text-decoration: none;
+}
+.nav-link-button.disabled {
+    color: #636c72;
+    cursor: not-allowed;
+}

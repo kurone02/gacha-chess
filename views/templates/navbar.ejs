@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="/">Home</a>
+            </li>
+            <% if(name){ %> 
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Ranked match</a>
+            </li>
+            <% } %> 
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Leaderboard</a>
+            </li>
+            <% if(!name){ %> 
+                <li class="nav-item dropdown ml-md-auto">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">You are not logged in</a>
+                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                           <a class="dropdown-item" style="font-size: 125%;" href="#">Login</a> 
+                           <a class="dropdown-item disabled" style="font-size: 125%;" href="#">Register</a> 
+                   </div>
+                </li>
+            <% } else{ %> 
+                <li class="nav-item dropdown ml-md-auto">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">Hi, <%= name %></a>
+                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                           <a class="dropdown-item" style="font-size: 125%;" href="#">Profile</a> 
+                           <a class="dropdown-item disabled" style="font-size: 125%;" href="#">Comming soon...</a> 
+                        <div class="dropdown-divider">
+                        </div> 
+                        <form method="post" action="/logout?_method=DELETE" class="inline">
+                            <input type="hidden" name="extra_submit_param" value="extra_submit_value">
+                            <button type="submit" name="submit_param" value="submit_value" style="font-size: 125%;" class="link-button dropdown-item" style="font-size: 125%;">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            <% } %> 
+        </ul>
+    </div>
+</div>
