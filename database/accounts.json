@@ -3,6 +3,9 @@
         "id": 0,
         "username": "root",
         "password": "$2b$10$I1ntzh0krXtXKCZDQKtAMeo9PzeiW7YYo3nLhRC6lcjcWiu/DgU3C",
+        "elo": 3000,
+        "rank_css": "InternationalGrandmaster",
+        "rank": "International Grandmaster",
         "authority": -1,
         "in_game": null
     },
@@ -10,6 +13,9 @@
         "id": 1,
         "username": "admin",
         "password": "$2b$10$n8bPh7alUjGGF3vh4LwuiOahIXwEcBNsnz3ZdGRAM24mxgWBib38S",
+        "elo": 1628,
+        "rank_css": "Expert",
+        "rank": "Expert",
         "authority": 0,
         "in_game": null
     },
@@ -17,6 +23,9 @@
         "id": 2,
         "username": "moderator1",
         "password": "$2b$10$HW2bidtiRgFU7x4KiWEthufMlSOb4SfafGppyBLZlhpMTbO4bKDeu",
+        "elo": 1500,
+        "rank_css": "Specialist",
+        "rank": "Specialist",
         "authority": 1,
         "in_game": null
     },
@@ -24,6 +33,9 @@
         "id": 3,
         "username": "moderator2",
         "password": "$2b$10$HW2bidtiRgFU7x4KiWEthufMlSOb4SfafGppyBLZlhpMTbO4bKDeu",
+        "elo": 1500,
+        "rank_css": "Specialist",
+        "rank": "Specialist",
         "authority": 1,
         "in_game": null
     },
@@ -31,14 +43,19 @@
         "id": 4,
         "username": "tester1",
         "password": "$2b$10$QGqnfpR2ARkkMp9s5O07a.gO/CUFxot8xlFKxzN3BmJlOf6Sc.2Z6",
+        "elo": 1631,
+        "rank_css": "Expert",
+        "rank": "Expert",
         "authority": 2,
         "in_game": null
-        
     },
     {
         "id": 5,
         "username": "tester2",
         "password": "$2b$10$3M7.d8SURkxvksJcrntjleIufv9AVPS5R3eoEEpRkFeuwEuvUAobK",
+        "elo": 1583,
+        "rank_css": "Specialist",
+        "rank": "Specialist",
         "authority": 2,
         "in_game": null
     },
@@ -46,6 +63,9 @@
         "id": 6,
         "username": "tester3",
         "password": "$2b$10$xfxH/L6tKDMBHsM4QJnkhOwUhDWtCkXZ6UiGSNXMOSGvTaLBukSR.",
+        "elo": 1200,
+        "rank_css": "Pupil",
+        "rank": "Pupil",
         "authority": 2,
         "in_game": null
     },
@@ -53,6 +73,29 @@
         "id": 7,
         "username": "tester4",
         "password": "$2b$10$ZMVBkiTW.eg5KZOfGMf7vOnKSS2cQ.7UwgH2HiWbqOBqX5LkPeQ1y",
+        "elo": 1200,
+        "rank_css": "Pupil",
+        "rank": "Pupil",
+        "authority": 2,
+        "in_game": null
+    },
+    {
+        "id": 8,
+        "username": "tester5",
+        "password": "$2b$10$45588rgGXGB5/EW7nxPxpels..n6pbNdGpPUhK5o.eEMKGSbjORIO",
+        "elo": 1200,
+        "rank_css": "Pupil",
+        "rank": "Pupil",
+        "authority": 2,
+        "in_game": null
+    },
+    {
+        "id": 9,
+        "username": "tester6",
+        "password": "$2b$10$ZiyLwAniAxBWz/WU2.IAcOJJoQKEdTz0BqXWWXhb5JdXoAg/j4gie",
+        "elo": 1200,
+        "rank_css": "Pupil",
+        "rank": "Pupil",
         "authority": 2,
         "in_game": null
     }
