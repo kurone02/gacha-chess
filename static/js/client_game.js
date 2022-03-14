@@ -20,6 +20,7 @@ var $pgn = $('#pgn');
 var $gameDetails = $('#gameDetails');
 var $gacha = $('#gacha');
 var $rolledPiece = $('#rolledPiece');
+var $surrender = $('#surrender');
 
 // Actual game variables
 var white_points = 10;
@@ -120,6 +121,8 @@ socket.on("point changed", (matchid, changed_player, new_point) => {
   $gameDetails.html("Black's point: " + black_points + "<br>White's point: " + white_points);
 });
 
+socket.on("");
+
 socket.on("gacha", (matchid, rolledPiece, match_info) => {
   if(match_id != matchid) return;
 
@@ -153,6 +156,17 @@ socket.on("changed piece", (matchid, match_info) => {
   updateStatus(null, false);
 })
 
+socket.on("surrender", (matchid, surrender_player) => {
+  if(match_id != matchid) return;
+
+  if(surrender_player === my_turn){
+    alert(`You surrendered the game!`);
+  } else{
+    alert(`Your opponent has just surrendered!`);
+  }
+  window.location.href = "/";
+});
+
 
 socket.on("game finished", (matchid, result) => {
   if(match_id != matchid) return;
@@ -185,33 +199,13 @@ function chooseRandom(){
   return weighted_probability[n - 1][0];
 }
 
+function surrender(){
+  socket.emit("surrender", match_id, my_turn);
+}
+
 function rollRandomPiece(){
 
   socket.emit("gacha", match_id, my_turn);
-
-  // randomPiece = chessPieces[chooseRandom()];
-
-  // if(my_turn === game.turn()){
-  //   socket.emit("point changed", match_id, game.turn(), -10);
-
-  // var status = "You rolled a ";
-  // if(randomPiece == game.KNIGHT){
-  //   status += "Knight!\nSelect a pawn to replace.";
-  // } else if(randomPiece == game.BISHOP){
-  //   status += "Bishop!\nSelect a pawn to replace.";
-  // } else if(randomPiece == game.ROOK){
-  //   status += "Rook!\nSelect a pawn to replace.";
-  // } else{
-  //   status += "Queen!!!\nSelect a pawn to replace.";
-  // }
-
-  // for(var invalidPawn = true; invalidPawn;){
-  //   $rolledPiece.html(status)
-  //   is_roll = true;
-  //   invalidPawn = false;
-  // }
-
-  // $gameDetails.html("Black's point: " + black_points + "<br>White's point: " + white_points);
 }
 
 
@@ -340,15 +334,16 @@ function updateStatus (move, update_point = true) {
   if (game.in_checkmate()) {
     status = 'Game over, ' + moveColor + ' is in checkmate.';
     $gacha.attr('disabled', true)
-    if(moveColor === 'Black')
-    socket.emit("game finished", match_id, (moveColor === 'Black')? 1 : 2);
+    $surrender.attr('disabled', true)
+    if(game.turn() === my_turn) socket.emit("game finished", match_id, (moveColor === 'Black')? 1 : 2);
   }
 
   // draw?
   else if (game.in_draw()) {
     status = 'Game over, drawn position'
     $gacha.attr('disabled', true)
-    socket.emit("game finished", match_id, 3);
+    $surrender.attr('disabled', true)
+    if(game.turn() === my_turn) socket.emit("game finished", match_id, 3);
   }
 
   // game still on
@@ -368,89 +363,3 @@ function updateStatus (move, update_point = true) {
   $gameDetails.html("Black's point: " + black_points + "<br>White's point: " + white_points)
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var messages = document.getElementById('messages');
-
-// //  Username register
-// var register_form = document.getElementById('register-form');
-// var username_input = document.getElementById('username-input');
-// var user = "";
-
-// register_form.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     if (username_input.value) {
-//         socket.emit('registered', username_input.value);
-//         user = username_input.value;
-//         var item = document.getElementById("username");
-//         item.innerHTML = user;
-//         console.log(document.getElementById("chat-room"));
-//         document.getElementById("chat-room").hidden = false;
-//         document.getElementById("register-form").hidden = true;
-//         username_input.value = '';
-//     }
-// });
-
-// socket.on('registered', (username) => {
-//     var item = document.createElement('li');
-//     item.textContent = `${username} has entered the chat.`;
-//     messages.appendChild(item);
-//     window.scrollTo(0, document.body.scrollHeight);
-// });
-
-
-// // Chat
-
-// var form = document.getElementById('chat-form');
-// var input = document.getElementById('input');
-
-// form.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     if (input.value) {
-//         socket.emit('chat message', user, input.value);
-//         input.value = '';
-//     }
-// });
-
-// socket.on('chat message', (username, msg) => {
-//     var item = document.createElement('li');
-//     item.innerHTML = `<b ${(user == username)? "style='color: green'" : ""}>${username}</b>: ${msg}`;
-//     messages.appendChild(item);
-//     window.scrollTo(0, document.body.scrollHeight);
-// });
-
-// socket.on('leaving', (username) => {
-//     var item = document.createElement('li');
-//     item.innerHTML = `<b>${username}</b> has <b style='color: red'>disconnected</b>.`;
-//     messages.appendChild(item);
-//     window.scrollTo(0, document.body.scrollHeight);
-// })

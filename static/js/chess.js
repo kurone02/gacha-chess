@@ -220,8 +220,6 @@ var Chess = function (fen) {
     var position = tokens[0]
     var square = 0
 
-    console.log(validate_fen(fen).error)
-
     if (!validate_fen(fen).valid) {
       return false
     }
