@@ -302,6 +302,7 @@ index_io.on('connection', (socket) => {
                 id: new_match_id,
                 fen: "ppppkppp/pppppppp/8/8/8/8/PPPPPPPP/PPPPKPPP w - - 0 1",
                 // fen: "2k3R1/7R/8/8/8/8/8/8 w - - 0 1",
+                // fen: "3k2R1/8/4p3/8/8/8/8/3K4 b - - 0 1",
                 white_player: socket.request.user.username,
                 white_points: gacha_price,
                 black_player: null,
@@ -407,6 +408,8 @@ game_io.on('connection', (socket) => {
         let game_id = find_match(matches_history, match_id);
         let game = new Chess(matches_history[game_id].fen);
 
+        if(game.in_check()) return;
+
         if(rolled_player != game.turn()) return;
 
         if(rolled_player == 'b'){
@@ -477,7 +480,7 @@ game_io.on('connection', (socket) => {
         let game_id = find_match(matches_history, matchid);
         let game = new Chess(matches_history[game_id].fen);
 
-        if(!game.in_checkmate()) return;
+        if(!game.in_checkmate() && !game.in_draw()) return;
 
         let match_point = 0;
         let white_id = get_user_id(matches_history[game_id].white_player);
